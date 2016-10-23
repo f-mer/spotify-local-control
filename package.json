@@ -1,0 +1,22 @@
+{
+  "name": "spotify-local-control",
+  "version": "1.0.0",
+  "description": "Control a local spotify client via spotify-webhelper",
+  "main": "index.js",
+  "repository": "f-mer/spotify-local-control",
+  "keywords": [
+    "spotify",
+    "local",
+    "control",
+    "api",
+    "http",
+    "client"
+  ],
+  "author": "Fabian Mersch",
+  "license": "MIT",
+  "dependencies": {
+    "get-stream": "^2.3.1",
+    "random-string": "^0.1.2",
+    "url-parse-lax": "^1.0.0"
+  }
+}

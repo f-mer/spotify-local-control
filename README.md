@@ -35,6 +35,9 @@ Get status information about the local client.
 $ npm install spotify-local-control
 ```
 
+## See Also
+- [spotify-find](https://github.com/f-mer/spotify-local-control) - get spotify catalog information
+
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
 

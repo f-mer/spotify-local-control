@@ -3,6 +3,7 @@ const querystring = require('querystring')
 const urlParseLax = require('url-parse-lax')
 const getStream = require('get-stream')
 const randomString = require('random-string')
+const portscanner = require('portscanner')
 
 module.exports = connect
 
@@ -48,20 +49,28 @@ function connect () {
 // communicate with the local spotify client
 // null -> obj
 function localApi () {
-  const endpoint = `https://${randomString({length: 10})}.spotilocal.com:4370`
-
-  var csrfAndOuath
+  var csrfAndOuathAndEndpoints
 
   return {
     // send request to local spotify client
     // (str, obj?) -> promise
     get (path, query = {}) {
-      csrfAndOuath = csrfAndOuath || Promise.all([
-        getCsrfToken(),
-        getOauthToken()
-      ])
+      csrfAndOuathAndEndpoints = csrfAndOuathAndEndpoints || Promise.all([
+          getOauthToken(),
+          findPort()
+        ])
+        .then(function ([oauth, port]) {
+          const endpoint = `https://${randomString({length: 10})}.spotilocal.com:${port}`
 
-      return csrfAndOuath.then(([csrf, oauth]) => get(endpoint + path, {
+          return Promise.all([
+            oauth,
+            getCsrfToken({endpoint: endpoint}),
+            endpoint
+          ])
+        })
+
+
+      return csrfAndOuathAndEndpoints.then(([oauth, csrf, endpoint]) => get(endpoint + path, {
         headers: {
           'Origin': 'https://open.spotify.com'
         },
@@ -70,9 +79,19 @@ function localApi () {
     }
   }
 
+  // find port sportify webhelper is running on
+  // null -> int
+  function findPort () {
+    return new Promise(function (resolve, reject) {
+      portscanner.findAPortInUse(4370, 4380, '127.0.0.1', function(error, port) {
+        error ? reject(error) : resolve(port)
+      })
+    })
+  }
+
   // fetch csrf token
   // null -> promise
-  function getCsrfToken () {
+  function getCsrfToken ({endpoint: endpoint}) {
     return get(endpoint + '/simplecsrf/token.json', {
       headers: {
         'Origin': 'https://open.spotify.com'

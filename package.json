@@ -1,6 +1,6 @@
 {
   "name": "spotify-local-control",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Control a local spotify client via spotify-webhelper",
   "main": "index.js",
   "repository": "f-mer/spotify-local-control",

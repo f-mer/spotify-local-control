@@ -103,7 +103,11 @@ function localApi () {
   // fetch oauth token
   // null -> promise
   function getOauthToken () {
-    return get('https://open.spotify.com/token')
+    return get('https://open.spotify.com/token', {
+      headers: {
+        'User-Agent': 'spotify-local-control'
+      }
+    })
       .then((res) => res.body['t'])
   }
 }

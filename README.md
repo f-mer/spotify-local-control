@@ -3,8 +3,8 @@
 
 ## Usage
 ```js
-const connect = require('spotify-local-control')
-const client = connect()
+var connect = require('spotify-local-control')
+var client = connect()
 
 client.play('spotify:track:0JhKJg5ejeQ8jq89UQtnw8')
 client.pause()

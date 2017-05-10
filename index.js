@@ -1,16 +1,16 @@
-const https = require('https')
-const querystring = require('querystring')
-const urlParseLax = require('url-parse-lax')
-const getStream = require('get-stream')
-const randomString = require('random-string')
-const portscanner = require('portscanner')
+var https = require('https')
+var querystring = require('querystring')
+var urlParseLax = require('url-parse-lax')
+var getStream = require('get-stream')
+var randomString = require('random-string')
+var portscanner = require('portscanner')
 
 module.exports = connect
 
 // create a new instance
 // null -> obj
 function connect () {
-  const api = localApi()
+  var api = localApi()
 
   return {
     // return player status
@@ -60,7 +60,7 @@ function localApi () {
         findPort()
       ])
         .then(function ([oauth, port]) {
-          const endpoint = `https://${randomString({length: 10})}.spotilocal.com:${port}`
+          var endpoint = `https://${randomString({length: 10})}.spotilocal.com:${port}`
 
           return Promise.all([
             oauth,

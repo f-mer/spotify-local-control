@@ -56,9 +56,9 @@ function localApi () {
     // (str, obj?) -> promise
     get (path, query = {}) {
       csrfAndOuathAndEndpoints = csrfAndOuathAndEndpoints || Promise.all([
-          getOauthToken(),
-          findPort()
-        ])
+        getOauthToken(),
+        findPort()
+      ])
         .then(function ([oauth, port]) {
           const endpoint = `https://${randomString({length: 10})}.spotilocal.com:${port}`
 
@@ -68,7 +68,6 @@ function localApi () {
             endpoint
           ])
         })
-
 
       return csrfAndOuathAndEndpoints.then(([oauth, csrf, endpoint]) => get(endpoint + path, {
         headers: {
@@ -83,7 +82,7 @@ function localApi () {
   // null -> int
   function findPort () {
     return new Promise(function (resolve, reject) {
-      portscanner.findAPortInUse(4370, 4380, '127.0.0.1', function(error, port) {
+      portscanner.findAPortInUse(4370, 4380, '127.0.0.1', function (error, port) {
         error ? reject(error) : resolve(port)
       })
     })
@@ -91,7 +90,7 @@ function localApi () {
 
   // fetch csrf token
   // null -> promise
-  function getCsrfToken ({endpoint: endpoint}) {
+  function getCsrfToken ({endpoint}) {
     return get(endpoint + '/simplecsrf/token.json', {
       headers: {
         'Origin': 'https://open.spotify.com'

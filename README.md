@@ -12,6 +12,25 @@ client.resume()
 client.status().then(res => console.log(res))
 ```
 
+Can also be used on the command line:
+
+```
+$ spotify-local-control
+
+  Usage:
+      $ spotify-local-control <command>
+
+    Commands:
+      <default>    Show usage
+      play <uri>   Play a track
+      status       Show artist and track
+      pause        Pause the current track
+      resume       Resume the current track
+
+    Examples:
+      $ spotify-local-control play spotify:track:0JhKJg5ejeQ8jq89UQtnw8
+```
+
 ## API
 ### client = connect()
 Initialize a new client.

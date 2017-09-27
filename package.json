@@ -21,8 +21,10 @@
   "license": "MIT",
   "dependencies": {
     "get-stream": "^2.3.1",
-    "random-string": "^0.1.2",
-    "url-parse-lax": "^1.0.0",
-    "portscanner": "^2.1.1"
+    "portscanner": "^2.1.1",
+    "url-parse-lax": "^1.0.0"
+  },
+  "devDependencies": {
+    "tape": "^4.8.0"
   }
 }

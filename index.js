@@ -1,8 +1,6 @@
-var https = require('https')
 var querystring = require('querystring')
 var urlParseLax = require('url-parse-lax')
 var getStream = require('get-stream')
-var randomString = require('random-string')
 var portscanner = require('portscanner')
 
 module.exports = connect
@@ -60,7 +58,7 @@ function localApi () {
         findPort()
       ])
         .then(function ([oauth, port]) {
-          var endpoint = `https://${randomString({length: 10})}.spotilocal.com:${port}`
+          var endpoint = `http://127.0.0.1:${port}`
 
           return Promise.all([
             oauth,
@@ -123,7 +121,7 @@ function get (url, opts = {}) {
     }
     opts = Object.assign({method: 'GET', rejectUnauthorized: false}, url, opts)
 
-    https.request(opts, function (res) {
+    require(url.protocol === 'http:' ? 'http' : 'https').request(opts, function (res) {
       getStream(res)
         .then(data => JSON.parse(data))
         .then(function (body) {
